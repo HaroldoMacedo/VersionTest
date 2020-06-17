@@ -1,0 +1,266 @@
+openapi: 3.0.0
+
+info:
+  description: "POC Swagger file for the new Service Versioning Definition."
+  version: "1"
+  title: "Service Versioning POC"
+  contact:
+    name: "Haroldo Macêdo"
+    email: "haroldo.demacedo@nationwide.co.uk"
+externalDocs:
+  description: "Documentation"
+  url: "http://swagger.io"
+
+servers:
+  - url: "https://{host}/si/"
+    description: "Service to maintain the employees' information"
+    variables:
+      host:
+        enum:
+          - "api-desenv.nationwideintranet.co.uk"
+          - "api-qa.nationwideintranet.co.uk"
+          - "api.nationwideintranet.co.uk"
+        default: "api-desenv.nationwideintranet.co.uk"
+paths:
+  /employees/:
+    post:
+      summary: "Include employee"
+      operationId: "includeEmployee"
+      requestBody:
+        description: "Updated employee object"
+        required: true
+        content:
+          application/vnd.nem.v1+json:
+            schema:
+              $ref: "#/components/schemas/Employee_v1"
+          application/vnd.nem.v2+json:
+            schema:
+              $ref: "#/components/schemas/Employee_v2"
+      responses:
+        '201':
+          description: "New employee included"
+          content:
+            application/vnd.nem.v1+json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    $ref: '#/components/schemas/ID_v1'
+            application/vnd.nem.v2+json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    $ref: '#/components/schemas/ID_v2'
+        '400':
+          description: "Invalid employee supplied"
+        '410':
+          description: "Gone"
+
+  /employees/{employeeId}/:
+    get:
+      summary: "Get the employee from his internal ID"
+      description: "Search the DB by the PK {employeeID}"
+      operationId: "getEmployee"
+      parameters:
+        - name: employeeId
+          in: path
+          description: "Internal ID of the employee"
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/vnd.nem.v1+json:
+              schema:
+                $ref: "#/components/schemas/Employee_v1"
+            application/vnd.nem.v2+json:
+              schema:
+                $ref: "#/components/schemas/Employee_v2"
+            application/vnd.nem.v3+json:
+              schema:
+                $ref: "#/components/schemas/Employee_v3"
+        '400':
+          description: "Invalid employee name supplied"
+        '410':
+          description: "Gone"
+    delete:
+      deprecated: true
+      summary: "Delete employee"
+      description: "This can only be done by the logged in user."
+      operationId: "deleteEmployee"
+      parameters:
+        - name: employeeId
+          in: path
+          description: "The name that needs to be deleted"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/vnd.nem.v1+json:
+              schema:
+                $ref: "#/components/schemas/Employee_v1"
+        '400':
+          description: "Invalid employeename supplied"
+        '410':
+          description: "Gone"
+
+  /persons/{personId}/:
+    get:
+      summary: "Return person information such name, date of birth"
+      operationId: "getPersonInfo"
+      parameters:
+        - name: personId
+          in: path
+          description: "Internal ID of the employee"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/vnd.nem.v1+json:
+              schema:
+                $ref: '#/components/schemas/Person_V1'
+
+components:
+  schemas:
+    Employee_v3:
+      type: "object"
+      properties:
+        id:
+          $ref: '#/components/schemas/ID_v2'
+        person:
+          description: "URI of the salary statement resource"
+          type: "string"
+          example: "/persons/2222"
+        email:
+          type: "string"
+          format: email
+          example: "contato@nationwide.co.uk"
+        status:
+          type: "integer"
+          format: "int32"
+          description: "Employee Status"
+        salaryStatement:
+          description: "URI of the salary statement resource"
+          type: "string"
+          example: "/salaryStatement/5143"
+        relationship:
+          type: "object"
+          properties:
+            manager:
+              description: "URI of the manager resource"
+              type: "string"
+              example: "/employees/5"
+            teamMember:
+              type: array
+              items:
+                description: "URI of a team member resource"
+                type: "string"
+                example: "/si/employees/2, /si/employees/3"
+      required: 
+        - id
+        - person
+        - status
+
+    Person_V1:
+      type: object
+      properties:
+        firstName:
+          type: "string"
+          example: "John"
+        lastName:
+          type: "string"
+          example: "Doe"
+        dateOfBirth:
+          type: string
+          format: date
+      required: 
+        - firstName
+        - lastName
+      
+    Employee_v2:
+      type: "object"
+      properties:
+        id:
+          $ref: '#/components/schemas/ID_v2'
+        firstName:
+          type: "string"
+          example: "John"
+        lastName:
+          type: "string"
+          example: "Doe"
+        email:
+          type: "string"
+          format: email
+          example: "contato@nationwide.co.uk"
+        phone:
+          type: "string"
+          example: "01793-000000"
+        status:
+          type: "integer"
+          format: "int32"
+          description: "Employee Status"
+        salaryStatement:
+          description: "URI of the salary statement resource"
+          type: "string"
+          example: "/salaryStatement/5143"
+        relationship:
+          type: "object"
+          properties:
+            manager:
+              description: "URI of the manager resource"
+              type: "string"
+              example: "/employees/5"
+            teamMember:
+              type: array
+              items:
+                description: "URI of a team member resource"
+                type: "string"
+                example: "/si/employees/2, /si/employees/3"
+      required: 
+        - id
+        - firstName
+        - lastName
+        - status
+
+    Employee_v1:
+      deprecated: true
+      type: "object"
+      properties:
+        id:
+          $ref: '#/components/schemas/ID_v1'
+        fullname:
+          type: "string"
+          example: "John Doe"
+        email:
+          type: "string"
+          format: email
+          example: "contato@nationwide.co.uk"
+        phone:
+          type: "string"
+          example: "01793-000000"
+        status:
+          type: "integer"
+          format: "int32"
+          description: "Employee Status"
+      required: 
+        - id
+        - fullname
+        - status
+
+    ID_v1:
+      type: "integer"
+      format: "int64"
+      example: 123456
+      
+    ID_v2:
+      type: "string"
+      example: "121212"
