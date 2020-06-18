@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.versioning.entity.Entity;
-import com.versioning.entity.VersionEntity;
+import com.versioning.entity.EntityVersion;
 
-@VersionEntity(name="Employee", version=2)
+@EntityVersion(name="Employee", version=2)
 public class EmployeeV3 implements Entity {
   class RelationShip {
     private String manager;

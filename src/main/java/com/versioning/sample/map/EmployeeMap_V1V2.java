@@ -3,7 +3,7 @@ package com.versioning.sample.map;
 
 import com.versioning.entity.Entity;
 import com.versioning.map.EntityVersionMapper;
-import com.versioning.map.EntityVersion;
+import com.versioning.map.EntityVersionMap;
 import com.versioning.sample.entity.EmployeeV1;
 import com.versioning.sample.entity.EmployeeV2;
 
@@ -16,7 +16,7 @@ public class EmployeeMap_V1V2 implements EntityVersionMapper {
    * Map V1 to V2.
    */
   @Override
-  @EntityVersion(entityName = "Employee", fromVersion = 1, toVersion = 2)
+  @EntityVersionMap(entityName = "Employee", fromVersion = 1, toVersion = 2)
   public Entity map(Entity entity) {
     EmployeeV1 employeeFrom = (EmployeeV1) entity;
     EmployeeV2 employeeTo = new EmployeeV2();

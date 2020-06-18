@@ -1,7 +1,7 @@
 package com.versioning.sample.entity;
 
 import com.versioning.entity.Entity;
-import com.versioning.entity.VersionEntity;
+import com.versioning.entity.EntityVersion;
 
 /**
  * Id to be returned by POST and PUT methods.
@@ -9,7 +9,7 @@ import com.versioning.entity.VersionEntity;
  * @author Haroldo Mac�do
  *
  */
-@VersionEntity(name = "Id", version = 1)
+@EntityVersion(name = "Id", version = 1)
 public class IdV1 implements Entity {
 
   private int id;

@@ -1,9 +1,9 @@
 package com.versioning.sample.entity;
 
 import com.versioning.entity.Entity;
-import com.versioning.entity.VersionEntity;
+import com.versioning.entity.EntityVersion;
 
-@VersionEntity(name="Error", version=1)
+@EntityVersion(name="Error", version=1)
 public class ErrorV1 implements Entity {
 
   private int code;
