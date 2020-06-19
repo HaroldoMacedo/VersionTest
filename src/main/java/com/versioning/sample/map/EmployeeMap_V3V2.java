@@ -14,9 +14,6 @@ import com.versioning.sample.util.HttpMethodsCall;
 
 public class EmployeeMap_V3V2 implements EntityVersionMapper {
 
-  /**
-   * Map V3 to V2.
-   */
   @Override
   @EntityVersionMap(entityName = "Employee", fromVersion = 3, toVersion = 2)
   public Entity map(Entity entity) {

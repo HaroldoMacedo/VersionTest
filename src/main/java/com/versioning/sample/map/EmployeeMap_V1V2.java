@@ -11,12 +11,6 @@ import com.versioning.sample.entity.EmployeeV2;
 
 public class EmployeeMap_V1V2 implements EntityVersionMapper {
 
-  public EmployeeMap_V1V2() {
-  }
-
-  /**
-   * Map V1 to V2.
-   */
   @Override
   @EntityVersionMap(entityName = "Employee", fromVersion = 1, toVersion = 2)
   public Entity map(Entity entity) {

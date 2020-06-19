@@ -8,9 +8,6 @@ import com.versioning.sample.entity.IdV2;
 
 public class IdMap_V2V1 implements EntityVersionMapper {
 
-  public IdMap_V2V1() {
-  }
-
   @Override
   @EntityVersionMap(entityName = "Id", fromVersion = 2, toVersion = 1)
   public Entity map(Entity entity) {
