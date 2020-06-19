@@ -6,7 +6,7 @@ import java.util.List;
 import com.versioning.entity.Entity;
 import com.versioning.entity.EntityVersion;
 
-@EntityVersion(name="Employee", version=2)
+@EntityVersion(name="Employee", version=3)
 public class EmployeeV3 implements Entity {
   class RelationShip {
     private String manager;

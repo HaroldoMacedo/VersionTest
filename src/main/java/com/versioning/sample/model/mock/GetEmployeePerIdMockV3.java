@@ -9,7 +9,7 @@ import com.versioning.sample.entity.IdV2;
 public class GetEmployeePerIdMockV3 implements ExecuteOperationVersion {
 
   @Override
-  @ExecuteVersion(inputEntity="Id", inputVersion=2, outputEntity="Employee", outputVersion=2)
+  @ExecuteVersion(inputEntity="Id", inputVersion=2, outputEntity="Employee", outputVersion=3)
   public Entity execute(Entity entity) {
     IdV2 id = (IdV2)entity;
     EmployeeV3 employee = new EmployeeV3(id.getId());

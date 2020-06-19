@@ -20,14 +20,5 @@ public class GetEmployeePerIdMockV1 implements ExecuteOperationVersion {
     return employee;
   }
   
-  //  TODO: Remove main() method.
-  public static void main(String[] args) {
-    System.out.println("Starting...");
-    GetEmployeePerIdMockV1 runGetEmployee = new GetEmployeePerIdMockV1();
-
-    System.out.println("Calling map");
-    runGetEmployee.execute(new IdV1(1));
-    System.out.println("Mapped!\n\n");
-  }
 
 }

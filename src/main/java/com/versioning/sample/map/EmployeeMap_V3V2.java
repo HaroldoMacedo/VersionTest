@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 
 import com.versioning.entity.Entity;
+import com.versioning.map.EntityVersionMap;
 import com.versioning.map.EntityVersionMapper;
 import com.versioning.sample.entity.EmployeeV2;
 import com.versioning.sample.entity.EmployeeV3;
@@ -17,6 +18,7 @@ public class EmployeeMap_V3V2 implements EntityVersionMapper {
    * Map V3 to V2.
    */
   @Override
+  @EntityVersionMap(entityName = "Employee", fromVersion = 3, toVersion = 2)
   public Entity map(Entity entity) {
     EmployeeV3 employeeFrom = (EmployeeV3)entity;
     EmployeeV2 employeeTo = new EmployeeV2();

@@ -1,6 +1,8 @@
 package com.versioning.sample.map;
 
 
+import org.springframework.beans.BeanUtils;
+
 import com.versioning.entity.Entity;
 import com.versioning.map.EntityVersionMapper;
 import com.versioning.map.EntityVersionMap;
@@ -21,6 +23,7 @@ public class EmployeeMap_V1V2 implements EntityVersionMapper {
     EmployeeV1 employeeFrom = (EmployeeV1) entity;
     EmployeeV2 employeeTo = new EmployeeV2();
 
+    BeanUtils.copyProperties(employeeFrom, employeeTo);
     employeeTo.setId(employeeFrom.getId() + "");
     employeeTo.setFirstName(firstName(employeeFrom.getFullName()));
     employeeTo.setLastName(lastName(employeeFrom.getFullName()));
@@ -49,15 +52,4 @@ public class EmployeeMap_V1V2 implements EntityVersionMapper {
     return fullName.substring(5);
   }
 
-  //  TODO: Remove main() method.
-  public static void main(String[] args) throws Exception{
-    System.out.println("Starting...");
-    EmployeeMap_V1V2 employeeMap = new EmployeeMap_V1V2();
-
-    System.out.println("Calling map");
-    EmployeeV1 employee = new EmployeeV1(1);
-    employee.setFullName("Haroldo Macedo");
-    employeeMap.map(employee);
-    System.out.println("Mapped!\n\n");
-  }
 }
