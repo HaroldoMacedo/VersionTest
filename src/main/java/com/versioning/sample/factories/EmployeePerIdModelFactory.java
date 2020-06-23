@@ -9,7 +9,7 @@ import com.versioning.sample.map.EmployeeMap_V2V3;
 import com.versioning.sample.map.EmployeeMap_V3V2;
 import com.versioning.sample.map.IdMap_V1V2;
 import com.versioning.sample.map.IdMap_V2V1;
-import com.versioning.sample.model.mock.DeleteEmployeePerIdV2;
+import com.versioning.sample.model.mock.DeleteEmployeePerIdMockV2;
 import com.versioning.sample.model.mock.GetEmployeePerIdMockV3;
 import com.versioning.util.Method;
 
@@ -47,7 +47,7 @@ public class EmployeePerIdModelFactory  {
           case 1:
 //            return VersionConfigure.get(new DeleteEmployeePerIdV1());
           case 2:
-            return VersionConfigure.get(new DeleteEmployeePerIdV2());
+            return VersionConfigure.get(new DeleteEmployeePerIdMockV2());
         }
       default:
         throw new RuntimeException("Method " + method + " is not implemented for EmployeeModel class");
