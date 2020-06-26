@@ -15,6 +15,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.versioning.sample.entity.EmployeeV1;
+import com.versioning.sample.entity.ErrorV1;
 import com.versioning.sample.entity.IdV1;
 
 @SpringBootTest
@@ -28,6 +29,15 @@ public class TestEmployeeV1_Post {
     headersContentType.setContentType(new MediaType("application", "vnd.si.v1+json"));
   }
 
+  private EmployeeV1 PopulatedEmployee(int id) {
+    EmployeeV1 employee = new EmployeeV1(id);
+    employee.setFullName("Haroldo Macedo");
+    employee.setEmail("email@email.com");
+    employee.setPhone("123457689");
+    
+    return employee;
+  }
+  
   /**
    * Test OK
    */
@@ -37,15 +47,45 @@ public class TestEmployeeV1_Post {
     String url = BASE_URL;
     ResponseEntity<IdV1> response = null;
 
-    EmployeeV1 employee = new EmployeeV1(id);
-    employee.setFullName("Haroldo Macedo");
-    employee.setEmail("email@email.com");
-    employee.setPhone("123457689");
+    EmployeeV1 employee = PopulatedEmployee(id);
 
     // Request with Content Type Header
     response = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(employee, headersContentType), IdV1.class);
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
     assertEquals(id, response.getBody().getId());
+  }
+
+  /**
+   * Test No Id
+   */
+  @Test
+  public void postEmployee_NoId() {
+    String url = BASE_URL;
+    ResponseEntity<ErrorV1> response = null;
+
+    EmployeeV1 employee = PopulatedEmployee(0);
+
+    // Request with Content Type Header
+    response = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(employee, headersContentType), ErrorV1.class);
+    assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    assertEquals(1, response.getBody().getCode());
+  }
+
+  /**
+   * Test No Full Name
+   */
+  @Test
+  public void postEmployee_NoFullName() {
+    String url = BASE_URL;
+    ResponseEntity<ErrorV1> response = null;
+
+    EmployeeV1 employee = PopulatedEmployee(123);
+    employee.setFullName("");
+
+    // Request with Content Type Header
+    response = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(employee, headersContentType), ErrorV1.class);
+    assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    assertEquals(1, response.getBody().getCode());
   }
 
   /**
