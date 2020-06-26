@@ -3,7 +3,6 @@ package com.versioning.sample.factories;
 import com.versioning.VersionConfigure;
 import com.versioning.VersionExecuter;
 import com.versioning.VersioningConfigurationException;
-import com.versioning.sample.model.mock.PostEmployeeMockV1;
 import com.versioning.sample.model.mock.PostEmployeeMockV3;
 import com.versioning.util.Method;
 

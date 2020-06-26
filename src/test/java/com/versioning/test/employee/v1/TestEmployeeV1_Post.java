@@ -93,13 +93,9 @@ public class TestEmployeeV1_Post {
    */
   @Test
   public void postEmployee_Nok() {
-    int id = 12345;
     String url = BASE_URL;
 
-    EmployeeV1 employee = new EmployeeV1(id);
-    employee.setFullName("Haroldo Macedo");
-    employee.setEmail("email@email.com");
-    employee.setPhone("123457689");
+    EmployeeV1 employee = PopulatedEmployee(123);
 
     // Request with no Content Type Header
     try {
